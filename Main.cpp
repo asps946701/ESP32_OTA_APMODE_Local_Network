@@ -5,17 +5,19 @@
 #include <Update.h>
 
 const char *host = "esp32";
-const char *ssid = "ADD_WANTED_SSID_HERE";
-const char *password = "ADD_WANTED_PASSWORD_HERE";
+const char *ssid = "Router/AP SSID";
+const char *password = "Router/AP password";
+
+const char *ssid_SOFTAP = "ESP32_SOFTAP_SSID";
+const char *password_SOFTAP = "ESP32_SOFTAP_Password";
 
 WebServer server(80);
 
 
-/*	jquery.min.js version 3.2.1 - Contribution from https://esp32.com/viewtopic.php?t=11744
-
-	size of original js file:  85 KB
-	size in this source file: 148 KB
-	size on ESP:               30 KB
+/*  jquery.min.js version 3.2.1 - Contribution from https://esp32.com/viewtopic.php?t=11744
+  size of original js file:  85 KB
+  size in this source file: 148 KB
+  size on ESP:               30 KB
  
  */
 #define jquery_min_js_v3_2_1_gz_len 30178
@@ -130,38 +132,39 @@ String serverIndex =
 
 void onJavaScript(void) {
     Serial.println("onJavaScript(void)");
-		server.setContentLength(jquery_min_js_v3_2_1_gz_len);
-		server.sendHeader(F("Content-Encoding"), F("gzip"));
+    server.setContentLength(jquery_min_js_v3_2_1_gz_len);
+    server.sendHeader(F("Content-Encoding"), F("gzip"));
     server.send_P(200, "text/javascript", jquery_min_js_v3_2_1_gz, jquery_min_js_v3_2_1_gz_len);
 }
 
 /* setup function */
 void setup(void)
 {
-    IPAddress local_ip(192, 168, 1, 1);
+   /*//APMODE Soft Ap OTA
+    IPAddress local_ip(192, 168, 10, 1);
     IPAddress local_mask(255,255,255,0);
-    IPAddress gateway(192, 168, 1, 1);
+    IPAddress gateway(192, 168, 10, 1);
     Serial.begin(115200);
-    WiFi.softAP(ssid,password);
+    WiFi.softAP(ssid_SOFTAP,password_SOFTAP);
     WiFi.softAPConfig(local_ip,gateway,local_mask);
     Serial.println("");
     Serial.print("AP set to ");
-    Serial.println(ssid);
+    Serial.println(ssid_SOFTAP);
     Serial.print("IP address: ");
     Serial.println(WiFi.softAPIP());
-
+  */
 
 
     // Connect to WiFi network
-    //WiFi.begin(ssid, password);
+    WiFi.begin(ssid, password);
     Serial.println("");
 
     // Wait for connection
-    // while (WiFi.status() != WL_CONNECTED)
-    // {
-    //     delay(500);
-    //     Serial.print(".");
-    // }
+    while (WiFi.status() != WL_CONNECTED)
+    {
+         delay(500);
+         Serial.print(".");
+    }
     Serial.println("");
     Serial.print("Connected to ");
     Serial.println(ssid);
@@ -179,8 +182,8 @@ void setup(void)
     }
     Serial.println("mDNS responder started");
 
-     /*return javascript jquery */
-  server.on("/jquery.min.js", HTTP_GET, onJavaScript);
+    /*return javascript jquery */
+    server.on("/jquery.min.js", HTTP_GET, onJavaScript);
 
     /*return index page which is stored in serverIndex */
     server.on("/", HTTP_GET, []()
