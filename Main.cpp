@@ -140,11 +140,12 @@ void onJavaScript(void) {
 /* setup function */
 void setup(void)
 {
+  Serial.begin(115200);
    /*//APMODE Soft Ap OTA
     IPAddress local_ip(192, 168, 10, 1);
     IPAddress local_mask(255,255,255,0);
     IPAddress gateway(192, 168, 10, 1);
-    Serial.begin(115200);
+    
     WiFi.softAP(ssid_SOFTAP,password_SOFTAP);
     WiFi.softAPConfig(local_ip,gateway,local_mask);
     Serial.println("");
