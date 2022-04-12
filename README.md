@@ -1,4 +1,8 @@
 # ESP32_OTA_APMODE
+*****************************************
+This version using in Local_Area_Network where prohibit personal AP , so comment out soft AP function.
+
+******************************************
 This is a sample code for using OTA on Access point mode.  Previusly a issue happened on AP or offline connections where the ESP32 tried to import jquery.min.js from google API.
 Obviously this dont work, at there is no internet.  To fix this we can either embed the file on SPIFFS, or convert it to binary and just paste on our code.    
 
