@@ -8,8 +8,8 @@ const char *host = "esp32";
 const char *ssid = "Router/AP SSID";
 const char *password = "Router/AP password";
 
-const char *ssid_SOFTAP = "ESP32_SOFTAP_SSID";
-const char *password_SOFTAP = "ESP32_SOFTAP_Password";
+//const char *ssid_SOFTAP = "ESP32_SOFTAP_SSID";
+//const char *password_SOFTAP = "ESP32_SOFTAP_Password";
 
 WebServer server(80);
 
